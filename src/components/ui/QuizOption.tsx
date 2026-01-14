@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils'
-import { useState } from 'react'
 
 interface QuizOptionProps {
   text: string
@@ -14,33 +13,20 @@ interface QuizOptionProps {
  * Design otimizado para mobile com área de toque grande
  */
 export function QuizOption({ text, onClick, className }: QuizOptionProps) {
-  const [isPressed, setIsPressed] = useState(false)
-
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     onClick()
     // Remove o foco do botão para evitar hover persistente no mobile
     e.currentTarget.blur()
   }
 
-  const handleTouchStart = () => {
-    setIsPressed(true)
-  }
-
-  const handleTouchEnd = () => {
-    setIsPressed(false)
-  }
-
   return (
     <button
       onClick={handleClick}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      onTouchCancel={handleTouchEnd}
       className={cn(
         'w-full p-5 text-left rounded-lg border-2',
-        'bg-background/80 backdrop-blur-sm',
-        // Estado base e pressionado (mobile)
-        isPressed ? 'border-primary bg-primary/10 scale-[0.98]' : 'border-primary/20',
+        'bg-background/80 backdrop-blur-sm border-primary/20',
+        // Mobile: efeito visual durante o toque
+        'active:border-primary active:bg-primary/10 active:scale-[0.98]',
         // Desktop: efeito hover
         'md:hover:border-primary md:hover:bg-primary/10 md:hover:shadow-lg md:hover:shadow-primary/10',
         'transition-all duration-200',
@@ -51,20 +37,12 @@ export function QuizOption({ text, onClick, className }: QuizOptionProps) {
         className
       )}
     >
-      {/* Indicador visual - aparece quando pressionado (mobile) e hover (desktop) */}
-      <div className={cn(
-        'absolute left-0 top-0 bottom-0 w-1 bg-primary transition-opacity',
-        isPressed ? 'opacity-100' : 'opacity-0 md:group-hover:opacity-100'
-      )} />
+      {/* Indicador visual - aparece no toque (mobile) e hover (desktop) */}
+      <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary opacity-0 group-active:opacity-100 md:group-hover:opacity-100 transition-opacity" />
       
       <div className="flex items-center gap-3">
         {/* Círculo indicador */}
-        <div className={cn(
-          'w-5 h-5 rounded-full border-2 transition-all flex-shrink-0',
-          isPressed 
-            ? 'border-primary bg-primary/20' 
-            : 'border-primary/30 md:group-hover:border-primary md:group-hover:bg-primary/20'
-        )} />
+        <div className="w-5 h-5 rounded-full border-2 border-primary/30 group-active:border-primary group-active:bg-primary/20 md:group-hover:border-primary md:group-hover:bg-primary/20 transition-all flex-shrink-0" />
         
         <span className="flex-1">{text}</span>
         
