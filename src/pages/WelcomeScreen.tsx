@@ -24,39 +24,77 @@ export function WelcomeScreen() {
   }
 
   return (
-    <ScreenContainer>
-      <div className="flex-1 flex flex-col justify-center space-y-8 text-center">
-        {/* Headline principal */}
-        <div className="space-y-4">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
-            Descubra em 60 segundos o que está travando seus resultados na academia
-          </h1>
-          
-          {/* Subheadline */}
-          <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto">
-            Responda 3 perguntas rápidas e veja exatamente o que ajustar no seu treino.
-          </p>
+    <ScreenContainer fullHeight>
+      {/* Background com gradiente sutil */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary/10 pointer-events-none" />
+      
+      <div className="relative flex-1 flex flex-col justify-between py-8 md:py-12">
+        {/* Topo com badge de credibilidade */}
+        <div className="flex justify-center mb-4">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium border border-primary/20">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span>Método aprovado por +10.000 alunos</span>
+          </div>
         </div>
 
-        {/* CTA Principal */}
-        <div className="flex flex-col items-center space-y-3">
+        {/* Conteúdo central */}
+        <div className="flex-1 flex flex-col justify-center space-y-6 text-center px-4">
+          {/* Ícone visual */}
+          <div className="flex justify-center">
+            <div className="w-20 h-20 md:w-24 md:h-24 bg-primary/10 rounded-full flex items-center justify-center">
+              <svg className="w-10 h-10 md:w-12 md:h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+          </div>
+
+          {/* Headline principal */}
+          <div className="space-y-3">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight px-2">
+              Descubra em <span className="text-primary">60 segundos</span> o que está travando seus resultados na academia
+            </h1>
+            
+            {/* Subheadline */}
+            <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto px-2">
+              Responda 3 perguntas rápidas e veja exatamente o que ajustar no seu treino.
+            </p>
+          </div>
+
+          {/* Benefícios em lista */}
+          <div className="flex flex-col items-center gap-2 max-w-md mx-auto">
+            {[
+              '✓ Diagnóstico personalizado',
+              '✓ Resultados imediatos',
+              '✓ 100% gratuito'
+            ].map((benefit, index) => (
+              <div key={index} className="flex items-center gap-2 text-sm md:text-base text-foreground/80">
+                <span>{benefit}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA fixo na parte inferior */}
+        <div className="flex flex-col items-center space-y-4 px-4">
           <CTAButton 
             size="lg" 
             onClick={handleStart}
-            className="w-full max-w-md"
+            className="w-full max-w-md shadow-2xl shadow-primary/20 hover:shadow-primary/30"
           >
-            Começar diagnóstico gratuito
+            🚀 Começar diagnóstico gratuito
           </CTAButton>
           
-          {/* Texto auxiliar */}
-          <p className="text-sm text-muted-foreground">
-            Leva menos de 1 minuto • Não precisa de cadastro
-          </p>
-        </div>
-
-        {/* Indicador visual opcional */}
-        <div className="pt-8 text-muted-foreground text-sm opacity-50">
-          ↓
+          {/* Textos auxiliares de confiança */}
+          <div className="space-y-1 text-center">
+            <p className="text-xs md:text-sm text-muted-foreground">
+              ⏱️ Leva menos de 1 minuto
+            </p>
+            <p className="text-xs md:text-sm text-muted-foreground">
+              🔒 Não precisa de cadastro
+            </p>
+          </div>
         </div>
       </div>
     </ScreenContainer>
