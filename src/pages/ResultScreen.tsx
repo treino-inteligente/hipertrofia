@@ -1,7 +1,6 @@
 import { useLocation } from 'wouter'
 import { ScreenContainer } from '@/components/ui/ScreenContainer'
 import { CTAButton } from '@/components/ui/CTAButton'
-import { ProgressBar } from '@/components/ProgressBar'
 import { analytics } from '@/lib/analytics'
 import { useEffect } from 'react'
 
@@ -30,11 +29,6 @@ export function ResultScreen() {
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-primary/3 to-primary/10 pointer-events-none" />
       
       <div className="relative flex-1 flex flex-col py-6 px-4">
-        {/* Barra de progresso */}
-        <div className="mb-6">
-          <ProgressBar progress={75} />
-        </div>
-
         <div className="flex-1 flex flex-col justify-center space-y-8 max-w-xl mx-auto w-full">
           {/* Headline do resultado */}
           <div className="space-y-6 text-center">
@@ -61,13 +55,6 @@ export function ResultScreen() {
               <p>
                 A maioria das pessoas treina com disciplina, comparece na academia, se esforça...
                 mas <strong className="text-foreground">repete os mesmos estímulos mês após mês</strong>.
-              </p>
-            </div>
-            
-            <div className="bg-background/80 backdrop-blur-sm rounded-lg p-5 border border-primary/10">
-              <p>
-                Seu corpo se adapta rápido. Se você não tem um método claro de progressão
-                (aumentar carga, volume ou intensidade de forma estruturada), os resultados simplesmente param.
               </p>
             </div>
             

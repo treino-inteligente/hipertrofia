@@ -1,7 +1,6 @@
 import { useLocation } from 'wouter'
 import { ScreenContainer } from '@/components/ui/ScreenContainer'
 import { CTAButton } from '@/components/ui/CTAButton'
-import { ProgressBar } from '@/components/ProgressBar'
 import { analytics } from '@/lib/analytics'
 import { useEffect } from 'react'
 import { CheckCircle2 } from 'lucide-react'
@@ -40,11 +39,6 @@ export function SolutionScreen() {
       <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-primary/5 to-background pointer-events-none" />
       
       <div className="relative flex-1 flex flex-col py-6 px-4">
-        {/* Barra de progresso completa */}
-        <div className="mb-6">
-          <ProgressBar progress={100} />
-        </div>
-
         <div className="flex-1 flex flex-col justify-between space-y-8 max-w-xl mx-auto w-full">
           {/* Badge de oferta */}
           <div className="flex justify-center">
