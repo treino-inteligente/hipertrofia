@@ -1,5 +1,4 @@
 import { Route, Switch, Redirect, Router } from 'wouter'
-import { useHashLocation } from 'wouter/use-hash-location'
 import { WelcomeScreen } from '@/pages/WelcomeScreen'
 import { QuizScreen } from '@/pages/QuizScreen'
 import { ResultScreen } from '@/pages/ResultScreen'
@@ -10,17 +9,32 @@ import { ThemeProvider } from '@/contexts/ThemeContext'
 import '@/index.css'
 
 /**
+ * Custom hook for browser location with base path support
+ */
+const useCustomLocation = () => {
+  const base = import.meta.env.BASE_URL || '/'
+  
+  return [
+    window.location.pathname.replace(base, '/') || '/',
+    (to: string) => {
+      window.history.pushState(null, '', base + to.slice(1))
+      window.dispatchEvent(new PopStateEvent('popstate'))
+    }
+  ] as [string, (path: string) => void]
+}
+
+/**
  * App principal
  * 
  * Configuração de rotas e providers
- * Usa hash routing (#/) para funcionar corretamente no GitHub Pages
+ * Usa routing customizado para manter base path do GitHub Pages
  */
 function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="light">
         <QuizProvider>
-          <Router hook={useHashLocation}>
+          <Router hook={useCustomLocation}>
             <Switch>
               {/* Rota inicial - Tela de entrada */}
               <Route path="/" component={WelcomeScreen} />
