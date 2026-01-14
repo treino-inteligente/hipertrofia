@@ -103,20 +103,21 @@ export function ResultScreen() {
       {/* Background com gradiente */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-primary/3 to-primary/10 pointer-events-none" />
       
-      <div className="relative flex-1 flex flex-col py-3 px-4">
-        <div className="flex-1 flex flex-col justify-center space-y-4 md:space-y-8 max-w-xl mx-auto w-full">
-          {/* Headline do resultado */}
-          <div className="space-y-3 md:space-y-6 text-center">
-            {/* Badge de resultado */}
-            <div className="flex justify-center">
-              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium border border-primary/20">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span>Diagnóstico completo</span>
-              </div>
-            </div>
+      <div className="relative flex-1 flex flex-col justify-between py-8 md:py-12">
+        {/* Topo com badge de credibilidade */}
+        <div className="flex justify-center mb-4">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium border border-primary/20">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span>Diagnóstico completo</span>
+          </div>
+        </div>
 
+        {/* Conteúdo central */}
+        <div className="flex-1 flex flex-col justify-center space-y-4 md:space-y-6 text-center px-4 max-w-xl mx-auto w-full">
+          {/* Headline do resultado */}
+          <div className="space-y-3 md:space-y-6">
             {/* Perfil */}
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary uppercase tracking-wide">
               {content.title}
