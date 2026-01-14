@@ -3,6 +3,73 @@ import { ScreenContainer } from '@/components/ui/ScreenContainer'
 import { CTAButton } from '@/components/ui/CTAButton'
 import { analytics } from '@/lib/analytics'
 import { useEffect } from 'react'
+import { useQuiz } from '@/hooks/useQuiz'
+
+/**
+ * Tipos de perfil baseados nas respostas
+ */
+type ProfileType = 'TREINA_DEMAIS' | 'ESTAGNADO' | 'SEM_DIRECAO'
+
+interface ProfileContent {
+  title: string
+  subtitle: string
+  description: string
+  secondaryDescription: string
+  testimonial: string
+  author: string
+}
+
+/**
+ * Determina o perfil baseado nas respostas das perguntas 2 e 3
+ */
+function getProfile(trainingDays?: string, mainProblem?: string): ProfileType {
+  // Pergunta 1 não é decisiva, apenas perguntas 2 (mainProblem) e 3 (trainingDays)
+  
+  const isHighFrequency = trainingDays === '5x ou mais' || trainingDays === '4x por semana'
+  
+  // TREINA DEMAIS: 5x+ ou 4x + "Treino muito e evoluo pouco"
+  if (isHighFrequency && mainProblem === 'Treino muito e evoluo pouco') {
+    return 'TREINA_DEMAIS'
+  }
+  
+  // ESTAGNADO: 5x+ ou 4x + "Não consigo aumentar carga"
+  if (isHighFrequency && mainProblem === 'Não consigo aumentar carga') {
+    return 'ESTAGNADO'
+  }
+  
+  // SEM DIREÇÃO: Todos os outros casos
+  return 'SEM_DIRECAO'
+}
+
+/**
+ * Conteúdo personalizado para cada perfil
+ */
+const PROFILE_CONTENT: Record<ProfileType, ProfileContent> = {
+  TREINA_DEMAIS: {
+    title: 'PERFIL "TREINA DEMAIS"',
+    subtitle: 'Seu principal erro hoje não é esforço — é o volume de treino muito alto',
+    description: 'A maioria das pessoas treina com disciplina, comparece na academia, se esforça... mas acaba exagerando no volume de treino.',
+    secondaryDescription: 'Não é preguiça. Não é genética. É falta de método.',
+    testimonial: '"Isso foi exatamente o que me travou por muito tempo. Eu treinava 5x por semana, fazia tudo certinho, várias técnicas... Quando entendi que o volume precisa ser controlado, tudo mudou."',
+    author: 'Lucas M.'
+  },
+  ESTAGNADO: {
+    title: 'PERFIL "ESTAGNADO"',
+    subtitle: 'Seu principal erro hoje não é esforço — é o volume de treino muito alto',
+    description: 'A maioria das pessoas treina com disciplina, se esforça... mas acaba exagerando no volume de treino, e ele é o vilão contra a progressão de carga.',
+    secondaryDescription: 'Não é preguiça. Não é genética. É falta de método.',
+    testimonial: '"Era exatamente isso que estava me impedindo de aumentar as cargas. Eu treinava 5x por semana, fazia tudo certinho, mas minha força parecia não aumentar... Quando entendi que o volume precisa ser controlado, tudo mudou."',
+    author: 'Rafael S.'
+  },
+  SEM_DIRECAO: {
+    title: 'PERFIL "SEM DIREÇÃO"',
+    subtitle: 'Seu principal erro hoje não é esforço — é a falta de direcionamento',
+    description: 'A maioria das pessoas treina com disciplina, se esforça... mas só faz aquilo que o instrutor manda, ou segue um treino genérico do intagram.',
+    secondaryDescription: 'Não é preguiça. Não é genética. É falta de método.',
+    testimonial: '"Eu seguia a ficha que o instrutor me passava, não fazia ideia que o problema estava ali. Eu treinava 5x por semana, fazia tudo certinho... Quando entendi que precisava de um treino com embasamento científico, tudo mudou."',
+    author: 'Bruno A.'
+  }
+}
 
 /**
  * TELA 3 - RESULTADO PERSONALIZADO
@@ -13,10 +80,14 @@ import { useEffect } from 'react'
  */
 export function ResultScreen() {
   const [, setLocation] = useLocation()
+  const { answers } = useQuiz()
 
   useEffect(() => {
     analytics.trackPageView('result')
   }, [])
+
+  const profileType = getProfile(answers.trainingDays, answers.mainProblem)
+  const content = PROFILE_CONTENT[profileType]
 
   const handleContinue = () => {
     analytics.trackCTAClick('result_screen')
@@ -42,11 +113,11 @@ export function ResultScreen() {
 
             {/* Perfil */}
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary uppercase tracking-wide">
-              Perfil Esforçado
+              {content.title}
             </h2>
             
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
-              Seu principal erro hoje não é <span className="text-primary">esforço</span> — é falta de <span className="text-primary">progressão estruturada</span>
+              {content.subtitle}
             </h1>
           </div>
 
@@ -54,14 +125,13 @@ export function ResultScreen() {
           <div className="space-y-4 text-muted-foreground text-base md:text-lg">
             <div className="bg-background/80 backdrop-blur-sm rounded-lg p-5 border border-primary/10">
               <p>
-                A maioria das pessoas treina com disciplina, comparece na academia, se esforça...
-                mas <strong className="text-foreground">repete os mesmos estímulos mês após mês</strong>.
+                {content.description}
               </p>
             </div>
             
             <div className="bg-background/80 backdrop-blur-sm rounded-lg p-5 border border-primary/10">
               <p>
-                Não é preguiça. Não é genética. É <strong className="text-foreground">falta de método</strong>.
+                {content.secondaryDescription}
               </p>
             </div>
           </div>
@@ -75,13 +145,10 @@ export function ResultScreen() {
               </div>
               <div className="flex-1 space-y-2">
                 <p className="text-sm md:text-base text-muted-foreground italic">
-                  "Isso foi exatamente o que me travou por muito tempo. Eu treinava 5x por semana,
-                  mas fazia sempre o mesmo treino. Quando entendi que progressão precisa ser planejada,
-                  tudo mudou."
+                  {content.testimonial}
                 </p>
                 <p className="text-sm font-semibold text-foreground">
-                  — [Seu Nome]
-                  {/* PERSONALIZE: Adicione seu nome aqui */}
+                  — {content.author}
                 </p>
               </div>
             </div>
