@@ -56,6 +56,7 @@ export function QuizScreen() {
   const [, setLocation] = useLocation()
   const { setAnswer } = useQuiz()
   const [showLoading, setShowLoading] = useState(false)
+  const [disableHover, setDisableHover] = useState(false)
 
   const step = parseInt(params.step || '1')
   const currentQuiz = QUIZ_DATA.find(q => q.id === step)
@@ -63,6 +64,14 @@ export function QuizScreen() {
 
   useEffect(() => {
     analytics.trackPageView(`quiz_step_${step}`)
+    // Desabilita hover ao carregar nova pergunta
+    setDisableHover(true)
+    // Reabilita hover após 300ms (tempo suficiente para evitar hover fantasma)
+    const timer = setTimeout(() => {
+      setDisableHover(false)
+    }, 300)
+    
+    return () => clearTimeout(timer)
   }, [step])
 
   // Redirect se step inválido
@@ -72,6 +81,9 @@ export function QuizScreen() {
   }
 
   const handleAnswer = (answer: string) => {
+    // Desabilita hover para evitar que o próximo botão fique verde
+    setDisableHover(true)
+    
     // Salva resposta
     setAnswer(currentQuiz.key, answer)
     analytics.trackQuizStep(step, answer)
@@ -132,6 +144,7 @@ export function QuizScreen() {
                 key={index}
                 text={option}
                 onClick={() => handleAnswer(option)}
+                disableHover={disableHover}
               />
             ))}
           </div>
