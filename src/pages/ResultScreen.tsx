@@ -47,30 +47,30 @@ function getProfile(trainingDays?: string, mainProblem?: string): ProfileType {
  */
 const PROFILE_CONTENT: Record<ProfileType, ProfileContent> = {
   TREINA_DEMAIS: {
-    title: 'PERFIL "TREINA DEMAIS"',
+    title: 'PERFIL O TREINA MUITO"',
     subtitleBefore: 'Seu principal erro hoje não é esforço — ',
     subtitleHighlight: 'é o volume de treino muito alto',
     description: 'A maioria das pessoas treina com disciplina, comparece na academia, se esforça... mas acaba exagerando no volume de treino.',
     secondaryDescription: 'Não é preguiça. Não é genética. É falta de método.',
-    testimonial: '"Isso foi exatamente o que me travou por muito tempo. Eu treinava 5x por semana, fazia tudo certinho, várias técnicas... Quando entendi que o volume precisa ser controlado, tudo mudou."',
+    testimonial: '"Isso foi exatamente o que me travou por muito tempo. Quando entendi que o volume precisa ser controlado, tudo mudou."',
     author: 'Lucas M.'
   },
   ESTAGNADO: {
-    title: 'PERFIL "ESTAGNADO"',
+    title: 'PERFIL O ESTAGNADO',
     subtitleBefore: 'Seu principal erro hoje não é esforço — ',
     subtitleHighlight: 'é o volume de treino muito alto',
     description: 'A maioria das pessoas treina com disciplina, se esforça... mas acaba exagerando no volume de treino, e ele é o vilão contra a progressão de carga.',
     secondaryDescription: 'Não é preguiça. Não é genética. É falta de método.',
-    testimonial: '"Era exatamente isso que estava me impedindo de aumentar as cargas. Eu treinava 5x por semana, fazia tudo certinho, mas minha força parecia não aumentar... Quando entendi que o volume precisa ser controlado, tudo mudou."',
+    testimonial: '"Era exatamente isso que estava me impedindo de aumentar as cargas. Quando entendi que o volume precisa ser controlado, tudo mudou."',
     author: 'Rafael S.'
   },
   SEM_DIRECAO: {
-    title: 'PERFIL "SEM DIREÇÃO"',
+    title: 'PERFIL O SEM DIREÇÃO',
     subtitleBefore: 'Seu principal erro hoje não é esforço — ',
     subtitleHighlight: 'é a falta de direcionamento',
     description: 'A maioria das pessoas treina com disciplina, se esforça... mas só faz aquilo que o instrutor manda, ou segue um treino genérico do intagram.',
     secondaryDescription: 'Não é preguiça. Não é genética. É falta de método.',
-    testimonial: '"Eu seguia a ficha que o instrutor me passava, não fazia ideia que o problema estava ali. Eu treinava 5x por semana, fazia tudo certinho... Quando entendi que precisava de um treino com embasamento científico, tudo mudou."',
+    testimonial: '"Eu seguia a ficha que o instrutor me passava, não fazia ideia que o problema estava ali. Quando entendi que precisava de um treino com embasamento científico, tudo mudou."',
     author: 'Bruno A.'
   }
 }
