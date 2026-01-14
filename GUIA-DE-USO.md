@@ -11,6 +11,7 @@ pnpm install
 ```
 
 Se não tiver o pnpm instalado:
+
 ```bash
 npm install -g pnpm
 ```
@@ -35,7 +36,7 @@ Acesse: `http://localhost:5173`
 
 ```typescript
 // Linha 12 - ALTERE AQUI
-const CHECKOUT_URL = 'https://pay.kiwify.com.br/SEU_LINK_AQUI'
+const CHECKOUT_URL = "https://pay.kiwify.com.br/SEU_LINK_AQUI";
 ```
 
 ---
@@ -47,7 +48,7 @@ const CHECKOUT_URL = 'https://pay.kiwify.com.br/SEU_LINK_AQUI'
 ```typescript
 // Linha 67 - ALTERE AQUI
 <p className="text-sm font-semibold text-foreground">
-  — [Seu Nome]  {/* ← Coloque seu nome aqui */}
+  — [Seu Nome] {/* ← Coloque seu nome aqui */}
 </p>
 ```
 
@@ -56,23 +57,26 @@ const CHECKOUT_URL = 'https://pay.kiwify.com.br/SEU_LINK_AQUI'
 ### 📸 Adicionar Imagens do Produto
 
 1. Coloque suas imagens na pasta `public/`:
+
    - `public/planilha-preview.png`
    - `public/pdf-preview.png`
 
 2. Edite `src/pages/SolutionScreen.tsx` (linha 88):
 
 ```tsx
-{/* ANTES - Placeholder */}
-<div className="aspect-[3/4] bg-gradient-to-br...">
-  ...
-</div>
+{
+  /* ANTES - Placeholder */
+}
+<div className="aspect-[3/4] bg-gradient-to-br...">...</div>;
 
-{/* DEPOIS - Imagem real */}
-<img 
-  src="/planilha-preview.png" 
+{
+  /* DEPOIS - Imagem real */
+}
+<img
+  src="/planilha-preview.png"
   alt="Planilha de treino"
   className="aspect-[3/4] rounded-lg object-cover"
-/>
+/>;
 ```
 
 ---
@@ -99,16 +103,29 @@ Adicione antes do `</head>`:
 ```html
 <!-- Meta Pixel Code -->
 <script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', 'SEU_PIXEL_ID');
-fbq('track', 'PageView');
+  !(function (f, b, e, v, n, t, s) {
+    if (f.fbq) return;
+    n = f.fbq = function () {
+      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+    };
+    if (!f._fbq) f._fbq = n;
+    n.push = n;
+    n.loaded = !0;
+    n.version = "2.0";
+    n.queue = [];
+    t = b.createElement(e);
+    t.async = !0;
+    t.src = v;
+    s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s);
+  })(
+    window,
+    document,
+    "script",
+    "https://connect.facebook.net/en_US/fbevents.js"
+  );
+  fbq("init", "SEU_PIXEL_ID");
+  fbq("track", "PageView");
 </script>
 ```
 
@@ -119,8 +136,8 @@ Descomente as linhas com `fbq`:
 ```typescript
 trackCheckout: () => {
   // Descomente:
-  window.fbq?.('track', 'InitiateCheckout')
-}
+  window.fbq?.("track", "InitiateCheckout");
+};
 ```
 
 ---
@@ -133,12 +150,17 @@ Adicione antes do `</head>`:
 
 ```html
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"
+></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXX');
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", "G-XXXXXXXX");
 </script>
 ```
 
@@ -176,7 +198,7 @@ Aguarde alguns minutos e acesse:
 
 1. **/** - Tela de entrada (hook)
 2. **/quiz/1** - Pergunta 1
-3. **/quiz/2** - Pergunta 2  
+3. **/quiz/2** - Pergunta 2
 4. **/quiz/3** - Pergunta 3
 5. **/resultado** - Resultado personalizado
 6. **/solucao** - Apresentação + CTA para checkout
@@ -202,7 +224,7 @@ Todos os textos estão dentro dos componentes das páginas:
 :root {
   /* Cor principal dos botões - Verde */
   --primary: 142 76% 36%;
-  
+
   /* Para azul, use: */
   --primary: 217 91% 60%;
 }
@@ -241,17 +263,20 @@ Durante o desenvolvimento:
 ## ❓ TROUBLESHOOTING
 
 ### Erro no build?
+
 ```bash
 rm -rf node_modules
 pnpm install
 ```
 
 ### GitHub Pages não atualiza?
+
 - Vá em Settings → Pages
 - Verifique se a branch `gh-pages` está selecionada
 - Aguarde 2-3 minutos
 
 ### Rotas não funcionam no GitHub Pages?
+
 - Verifique se o `base` no `vite.config.ts` está correto
 - Verifique se o `404.html` está na pasta `public/`
 

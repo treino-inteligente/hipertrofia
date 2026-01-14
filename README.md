@@ -31,11 +31,13 @@ pnpm preview
 ## 🚢 Deploy no GitHub Pages
 
 1. Configure o nome do repositório no `vite.config.ts`:
+
 ```ts
 base: '/seu-repositorio/',
 ```
 
 2. Execute o deploy:
+
 ```bash
 pnpm run predeploy
 pnpm run deploy
@@ -65,20 +67,25 @@ src/
 ## 📝 Personalização
 
 ### URL do Checkout
+
 Edite em `src/pages/SolutionScreen.tsx`:
+
 ```ts
-const CHECKOUT_URL = 'SUA_URL_KIWIFY_AQUI'
+const CHECKOUT_URL = "SUA_URL_KIWIFY_AQUI";
 ```
 
 ### Textos e Perguntas
+
 Todos os textos estão centralizados nos componentes de cada tela para fácil edição.
 
 ### Imagens
+
 Coloque suas imagens em `public/` e atualize os imports nos componentes.
 
 ## 📊 Tracking
 
 Prepare para adicionar:
+
 - Meta Pixel
 - Google Analytics
 - Eventos de conversão
