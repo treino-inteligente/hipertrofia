@@ -40,9 +40,10 @@ export function ResultScreen() {
               <span>Diagnóstico completo</span>
             </div>
 
-            <div className="w-20 h-20 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
-              <span className="text-5xl">🎯</span>
-            </div>
+            {/* Perfil */}
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary uppercase tracking-wide">
+              Perfil Esforçado
+            </h2>
             
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
               Seu principal erro hoje não é <span className="text-primary">esforço</span> — é falta de <span className="text-primary">progressão estruturada</span>
