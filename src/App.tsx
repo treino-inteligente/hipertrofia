@@ -1,4 +1,5 @@
 import { Route, Switch, Redirect, Router } from 'wouter'
+import { useState, useEffect } from 'react'
 import { WelcomeScreen } from '@/pages/WelcomeScreen'
 import { QuizScreen } from '@/pages/QuizScreen'
 import { ResultScreen } from '@/pages/ResultScreen'
@@ -14,13 +15,27 @@ import '@/index.css'
 const useCustomLocation = () => {
   const base = import.meta.env.BASE_URL || '/'
   
-  return [
-    window.location.pathname.replace(base, '/') || '/',
-    (to: string) => {
-      window.history.pushState(null, '', base + to.slice(1))
-      window.dispatchEvent(new PopStateEvent('popstate'))
+  const [path, setPath] = useState(() => {
+    return window.location.pathname.replace(base.slice(0, -1), '') || '/'
+  })
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const newPath = window.location.pathname.replace(base.slice(0, -1), '') || '/'
+      setPath(newPath)
     }
-  ] as [string, (path: string) => void]
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [base])
+
+  const navigate = (to: string) => {
+    const newPath = base + to.slice(1)
+    window.history.pushState(null, '', newPath)
+    setPath(to)
+  }
+
+  return [path, navigate] as [string, (path: string) => void]
 }
 
 /**
