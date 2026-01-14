@@ -1,5 +1,5 @@
 import { Route, Switch, Redirect, Router } from 'wouter'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { WelcomeScreen } from '@/pages/WelcomeScreen'
 import { QuizScreen } from '@/pages/QuizScreen'
 import { ResultScreen } from '@/pages/ResultScreen'
@@ -15,25 +15,35 @@ import '@/index.css'
 const useCustomLocation = () => {
   const base = import.meta.env.BASE_URL || '/'
   
-  const [path, setPath] = useState(() => {
+  const getCurrentPath = useCallback(() => {
     return window.location.pathname.replace(base.slice(0, -1), '') || '/'
-  })
+  }, [base])
+  
+  const [path, setPath] = useState(getCurrentPath)
 
   useEffect(() => {
-    const handlePopState = () => {
-      const newPath = window.location.pathname.replace(base.slice(0, -1), '') || '/'
-      setPath(newPath)
+    const handleChange = () => {
+      setPath(getCurrentPath())
     }
 
-    window.addEventListener('popstate', handlePopState)
-    return () => window.removeEventListener('popstate', handlePopState)
-  }, [base])
+    window.addEventListener('popstate', handleChange)
+    window.addEventListener('pushstate', handleChange)
+    
+    return () => {
+      window.removeEventListener('popstate', handleChange)
+      window.removeEventListener('pushstate', handleChange)
+    }
+  }, [getCurrentPath])
 
-  const navigate = (to: string) => {
+  const navigate = useCallback((to: string) => {
     const newPath = base + to.slice(1)
     window.history.pushState(null, '', newPath)
+    
+    // Dispara evento customizado para forçar re-render
+    window.dispatchEvent(new Event('pushstate'))
+    
     setPath(to)
-  }
+  }, [base])
 
   return [path, navigate] as [string, (path: string) => void]
 }
