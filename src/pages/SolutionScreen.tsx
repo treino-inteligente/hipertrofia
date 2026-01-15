@@ -105,13 +105,8 @@ export function SolutionScreen() {
                 <span>→</span>
                 <span className="text-primary font-semibold">CANSA MAIS</span>
                 <span>→</span>
-                <span className="text-primary font-semibold">CRESCE MENOS</span>
+                <span className="text-primary font-semibold">AVANÇA MENOS</span>
               </div>
-              <ul className="space-y-1 list-none">
-                <li>Fica meses sem subir carga</li>
-                <li>Começa a duvidar do próprio treino</li>
-                <li>Troca de ficha toda hora</li>
-              </ul>
             </div>
           </div>
 
