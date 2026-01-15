@@ -4,12 +4,66 @@ import { CTAButton } from '@/components/ui/CTAButton'
 import { analytics } from '@/lib/analytics'
 import { useEffect } from 'react'
 import { CheckCircle2 } from 'lucide-react'
+import { useQuiz } from '@/hooks/useQuiz'
 
 /**
  * ⚠️ CONFIGURAÇÃO IMPORTANTE
  * Substitua pela URL real do seu checkout Kiwify
  */
 const CHECKOUT_URL = 'https://pay.kiwify.com.br/SEU_LINK_AQUI'
+
+/**
+ * Tipos de perfil baseados nas respostas
+ */
+type ProfileType = 'TREINA_DEMAIS' | 'ESTAGNADO' | 'SEM_DIRECAO'
+
+interface SolutionContent {
+  headline: string
+  subtitle: string
+  connection: string
+  benefitHighlight: string
+}
+
+/**
+ * Determina o perfil baseado nas respostas das perguntas 2 e 3
+ */
+function getProfile(trainingDays?: string, mainProblem?: string): ProfileType {
+  const isHighFrequency = trainingDays === '5x ou mais' || trainingDays === '4x por semana'
+  
+  if (isHighFrequency && mainProblem === 'Treino muito e evoluo pouco') {
+    return 'TREINA_DEMAIS'
+  }
+  
+  if (isHighFrequency && mainProblem === 'Não consigo aumentar carga') {
+    return 'ESTAGNADO'
+  }
+  
+  return 'SEM_DIRECAO'
+}
+
+/**
+ * Conteúdo personalizado para cada perfil
+ */
+const SOLUTION_CONTENT: Record<ProfileType, SolutionContent> = {
+  TREINA_DEMAIS: {
+    headline: 'Eu passei anos treinando demais até descobrir o segredo',
+    subtitle: 'Não é treinar mais — é treinar com o volume certo',
+    connection: 'Se você treina muito mas evolui pouco, o problema não é falta de esforço. É excesso de volume sem controle. Foi exatamente isso que me travou, e foi isso que esse método resolveu.',
+    benefitHighlight: 'Aprenda a dosar o volume para crescer sem se queimar'
+  },
+  ESTAGNADO: {
+    headline: 'Eu também ficava meses sem aumentar a carga',
+    subtitle: 'Até descobrir que o problema era o volume excessivo',
+    connection: 'Se sua força não aumenta mesmo treinando pesado, o problema não é genética. É o volume de treino sabotando sua progressão. Quando ajustei isso, minhas cargas explodiram.',
+    benefitHighlight: 'Sistema de progressão que te faz aumentar carga toda semana'
+  },
+  SEM_DIRECAO: {
+    headline: 'Você não precisa de mais treino, precisa do treino certo',
+    subtitle: 'Seguir qualquer ficha não vai te levar a lugar nenhum',
+    connection: 'Se você não sabe se seu treino faz sentido, é porque ele provavelmente não faz. Treino sem embasamento científico é loteria. Vou te mostrar exatamente o que fazer.',
+    benefitHighlight: 'Método cientificamente comprovado que funciona de verdade'
+  }
+}
 
 /**
  * TELA 4 - SOLUÇÃO + CTA
@@ -20,10 +74,14 @@ const CHECKOUT_URL = 'https://pay.kiwify.com.br/SEU_LINK_AQUI'
  */
 export function SolutionScreen() {
   const [, setLocation] = useLocation()
+  const { answers } = useQuiz()
 
   useEffect(() => {
     analytics.trackPageView('solution')
   }, [])
+
+  const profileType = getProfile(answers.trainingDays, answers.mainProblem)
+  const content = SOLUTION_CONTENT[profileType]
 
   const handleCheckout = () => {
     analytics.trackCheckout()
@@ -49,19 +107,26 @@ export function SolutionScreen() {
           </div>
 
           {/* Headline */}
-          <div className="text-center space-y-3">
+          <div className="text-center space-y-4">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
-              Foi por isso que eu criei <span className="text-primary">esse material</span>
+              {content.headline}
             </h1>
-            <p className="text-base text-muted-foreground">
-              Tudo que você precisa para sair da estagnação
+            <p className="text-base md:text-lg text-muted-foreground">
+              {content.subtitle}
+            </p>
+          </div>
+
+          {/* Conexão com o problema - Texto de empatia */}
+          <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-lg p-5 border border-primary/20">
+            <p className="text-base text-foreground leading-relaxed">
+              {content.connection}
             </p>
           </div>
 
           {/* Lista do que recebe */}
           <div className="space-y-4">
             <p className="text-sm font-semibold text-primary text-center">
-              ✨ O que você vai receber:
+              ✨ {content.benefitHighlight}:
             </p>
             <div className="space-y-3 bg-background/80 backdrop-blur-sm rounded-lg p-5 border border-primary/10">
               {[
