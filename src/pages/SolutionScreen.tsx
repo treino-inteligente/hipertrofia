@@ -2,7 +2,7 @@ import { useLocation } from 'wouter'
 import { ScreenContainer } from '@/components/ui/ScreenContainer'
 import { CTAButton } from '@/components/ui/CTAButton'
 import { analytics } from '@/lib/analytics'
-import { useEffect } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { CheckCircle2 } from 'lucide-react'
 import { useQuiz } from '@/hooks/useQuiz'
 
@@ -16,13 +16,6 @@ const CHECKOUT_URL = 'https://pay.kiwify.com.br/SEU_LINK_AQUI'
  * Tipos de perfil baseados nas respostas
  */
 type ProfileType = 'TREINA_DEMAIS' | 'ESTAGNADO' | 'SEM_DIRECAO'
-
-interface SolutionContent {
-  headline: string
-  subtitle: string
-  connection: string
-  benefitHighlight: string
-}
 
 /**
  * Determina o perfil baseado nas respostas das perguntas 2 e 3
@@ -44,26 +37,7 @@ function getProfile(trainingDays?: string, mainProblem?: string): ProfileType {
 /**
  * Conteúdo personalizado para cada perfil
  */
-const SOLUTION_CONTENT: Record<ProfileType, SolutionContent> = {
-  TREINA_DEMAIS: {
-    headline: 'Eu passei anos treinando demais até descobrir o segredo',
-    subtitle: 'Não é treinar mais — é treinar com o volume certo',
-    connection: 'Se você treina muito mas evolui pouco, o problema não é falta de esforço. É excesso de volume sem controle. Foi exatamente isso que me travou, e foi isso que esse método resolveu.',
-    benefitHighlight: 'Aprenda a dosar o volume para crescer sem se queimar'
-  },
-  ESTAGNADO: {
-    headline: 'Eu também ficava meses sem aumentar a carga',
-    subtitle: 'Até descobrir que o problema era o volume excessivo',
-    connection: 'Se sua força não aumenta mesmo treinando pesado, o problema não é genética. É o volume de treino sabotando sua progressão. Quando ajustei isso, minhas cargas explodiram.',
-    benefitHighlight: 'Sistema de progressão que te faz aumentar carga toda semana'
-  },
-  SEM_DIRECAO: {
-    headline: 'Você não precisa de mais treino, precisa do treino certo',
-    subtitle: 'Seguir qualquer ficha não vai te levar a lugar nenhum',
-    connection: 'Se você não sabe se seu treino faz sentido, é porque ele provavelmente não faz. Treino sem embasamento científico é loteria. Vou te mostrar exatamente o que fazer.',
-    benefitHighlight: 'Método cientificamente comprovado que funciona de verdade'
-  }
-}
+
 
 /**
  * TELA 4 - SOLUÇÃO + CTA
@@ -75,13 +49,18 @@ const SOLUTION_CONTENT: Record<ProfileType, SolutionContent> = {
 export function SolutionScreen() {
   const [, setLocation] = useLocation()
   const { answers } = useQuiz()
+  const [sheetImageSrc, setSheetImageSrc] = useState('/planilha-print.png')
 
   useEffect(() => {
     analytics.trackPageView('solution')
   }, [])
 
   const profileType = getProfile(answers.trainingDays, answers.mainProblem)
-  const content = SOLUTION_CONTENT[profileType]
+
+  const ctaLabel = useMemo(() => {
+    if (profileType === 'SEM_DIRECAO') return 'Quero saber exatamente o que fazer'
+    return 'Quero destravar minha progressão'
+  }, [profileType])
 
   const handleCheckout = () => {
     analytics.trackCheckout()
@@ -98,41 +77,66 @@ export function SolutionScreen() {
       
       <div className="relative flex-1 flex flex-col py-6 px-4">
         <div className="flex-1 flex flex-col justify-between space-y-8 max-w-xl mx-auto w-full">
-          {/* Badge de oferta */}
+          {/* Badge discreto */}
           <div className="flex justify-center">
-            <div className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
-              <span>🎁</span>
-              <span>Oferta especial</span>
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium border border-primary/20">
+              <span>Sistema pronto para hoje</span>
             </div>
           </div>
 
-          {/* Headline */}
+          {/* Abertura com espelhamento direto */}
           <div className="text-center space-y-4">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
-              {content.headline}
+              Pelo que você respondeu, o seu problema <span className="text-primary">NÃO</span> é falta de esforço.
             </h1>
             <p className="text-base md:text-lg text-muted-foreground">
-              {content.subtitle}
+              É falta de um sistema que diga quando <span className="text-foreground font-semibold">aumentar</span>, quando <span className="text-foreground font-semibold">manter</span> e quando <span className="text-foreground font-semibold">reduzir</span>.
             </p>
           </div>
 
-          {/* Conexão com o problema - Texto de empatia */}
-          <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-lg p-5 border border-primary/20">
-            <p className="text-base text-foreground leading-relaxed">
-              {content.connection}
+          {/* Tensão real (curta e não agressiva) */}
+          <div className="bg-background/80 backdrop-blur-sm rounded-lg p-5 border border-primary/10 text-center">
+            <p className="text-sm font-semibold text-foreground mb-3">
+              O que normalmente acontece com quem continua assim
             </p>
+            <div className="space-y-2 text-sm text-muted-foreground">
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-primary font-semibold">TREINA MAIS</span>
+                <span>→</span>
+                <span className="text-primary font-semibold">CANSA MAIS</span>
+                <span>→</span>
+                <span className="text-primary font-semibold">CRESCE MENOS</span>
+              </div>
+              <ul className="space-y-1 list-none">
+                <li>Fica meses sem subir carga</li>
+                <li>Começa a duvidar do próprio treino</li>
+                <li>Troca de ficha toda hora</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Solução como atalho mental */}
+          <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-lg p-5 border border-primary/20 text-center">
+            <div className="space-y-3">
+              <p className="text-base text-foreground leading-relaxed">
+                Eu criei isso porque queria <span className="font-semibold">parar de pensar em treino</span>.
+              </p>
+              <p className="text-base text-foreground leading-relaxed">
+                <span className="font-semibold">A planilha decide por mim.</span> Eu só executo.
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Menos ansiedade, menos dúvida, menos medo de errar.
+              </p>
+            </div>
           </div>
 
           {/* Lista do que recebe */}
           <div className="space-y-4">
-            <p className="text-sm font-semibold text-primary text-center">
-              ✨ {content.benefitHighlight}:
-            </p>
+            <p className="text-sm font-semibold text-primary text-center">✨ O que você recebe:</p>
             <div className="space-y-3 bg-background/80 backdrop-blur-sm rounded-lg p-5 border border-primary/10">
               {[
                 'Planilha de treino editável com progressão automática',
-                'PDF explicando o método passo a passo (50+ páginas)',
-                'Exemplo real de uso e aplicação',
+                'Regras simples de ajuste (aumentar / manter / reduzir)',
                 'Acesso imediato por e-mail'
               ].map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
@@ -143,42 +147,33 @@ export function SolutionScreen() {
             </div>
           </div>
 
-          {/* Demonstração visual - Placeholders */}
+          {/* Prova visual mínima (crítica) */}
           <div className="space-y-3">
-            <p className="text-sm font-semibold text-center text-muted-foreground">
-              👀 Veja o que você vai receber:
-            </p>
-            
-            <div className="grid grid-cols-2 gap-4">
-              {/* Placeholder Planilha */}
-              <div className="aspect-[3/4] bg-gradient-to-br from-primary/20 to-primary/5 rounded-lg flex items-center justify-center border-2 border-dashed border-primary/30 hover:border-primary/50 transition-all">
-                <div className="text-center p-4">
-                  <div className="text-4xl mb-2">📊</div>
-                  <p className="text-xs font-semibold text-foreground">
-                    Planilha
-                    <br />
-                    Editável
-                  </p>
-                </div>
-              </div>
+            <p className="text-sm font-semibold text-center text-muted-foreground">Um print real da planilha:</p>
 
-              {/* Placeholder PDF */}
-              <div className="aspect-[3/4] bg-gradient-to-br from-primary/20 to-primary/5 rounded-lg flex items-center justify-center border-2 border-dashed border-primary/30 hover:border-primary/50 transition-all">
-                <div className="text-center p-4">
-                  <div className="text-4xl mb-2">📖</div>
-                  <p className="text-xs font-semibold text-foreground">
-                    PDF Completo
-                    <br />
-                    50+ páginas
-                  </p>
-                </div>
+            <div className="relative overflow-hidden rounded-lg border border-primary/15 bg-background">
+              <img
+                src={sheetImageSrc}
+                alt="Print da planilha com progressão automática"
+                className="w-full h-auto block"
+                onError={() => {
+                  if (sheetImageSrc.endsWith('.png')) setSheetImageSrc('/planilha-print.svg')
+                }}
+              />
+
+              {/* Círculo de destaque (ajuste a posição se trocar o print) */}
+              <div
+                aria-hidden="true"
+                className="absolute border-4 border-primary/80 rounded-full pointer-events-none"
+                style={{ width: 140, height: 90, right: 24, top: 24 }}
+              />
+              <div
+                aria-hidden="true"
+                className="absolute right-6 top-[120px] bg-primary text-white text-xs font-semibold px-2 py-1 rounded-md shadow"
+              >
+                progressão automática aqui
               </div>
             </div>
-            
-            <p className="text-xs text-center text-muted-foreground italic">
-              {/* PERSONALIZE: Substitua os placeholders acima por screenshots reais */}
-              Substitua por imagens reais do produto em /public/
-            </p>
           </div>
 
           {/* Preço e CTA */}
@@ -213,7 +208,7 @@ export function SolutionScreen() {
                 onClick={handleCheckout}
                 className="w-full shadow-2xl shadow-primary/30 hover:shadow-primary/40 text-lg"
               >
-                🚀 Quero acessar agora
+                {ctaLabel}
               </CTAButton>
               
               {/* Badges de segurança */}
