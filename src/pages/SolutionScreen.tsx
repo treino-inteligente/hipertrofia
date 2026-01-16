@@ -97,7 +97,7 @@ export function SolutionScreen() {
           {/* Tensão real (curta e não agressiva) */}
           <div className="bg-background/80 backdrop-blur-sm rounded-lg p-5 border border-primary/10 text-center">
             <p className="text-sm font-semibold text-foreground mb-3">
-              O que normalmente acontece com quem continua assim
+              O que acontece com quem continua assim:
             </p>
             <div className="space-y-2 text-sm text-muted-foreground">
               <div className="flex items-center justify-center gap-2">
@@ -120,7 +120,7 @@ export function SolutionScreen() {
                 <span className="font-semibold">A planilha decide por mim.</span> Eu só executo.
               </p>
               <p className="text-sm text-muted-foreground">
-                Menos ansiedade, menos dúvida, menos medo de errar.
+                Menos ansiedade, menos medo de errar.
               </p>
             </div>
           </div>
