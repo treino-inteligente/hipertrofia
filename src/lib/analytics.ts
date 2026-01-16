@@ -21,7 +21,6 @@ declare global {
   interface Window {
     clarity?: (command: string, ...args: any[]) => void;
     gtag?: (command: string, ...args: any[]) => void;
-    fbq?: (command: string, ...args: any[]) => void;
   }
 }
 
@@ -97,33 +96,8 @@ export const analytics = {
     analytics.trackEvent('cta_clicked', { location })
   },
 
-  trackViewContent: (contentName: string, contentCategory?: string) => {
-    console.log('📊 View Content:', contentName)
-    
-    // Facebook Pixel - ViewContent (pessoa chegou na página da solução e ENGATOU)
-    if (window.fbq) {
-      window.fbq('track', 'ViewContent', {
-        content_name: contentName,
-        content_category: contentCategory || 'solution'
-      })
-    }
-    
-    // Microsoft Clarity
-    if (window.clarity) {
-      window.clarity('event', 'view_content')
-      window.clarity('set', 'content_viewed', contentName)
-    }
-    
-    analytics.trackEvent('view_content', { content_name: contentName, content_category: contentCategory })
-  },
-
   trackCheckout: () => {
     console.log('📊 Checkout Initiated')
-    
-    // Facebook Pixel - InitiateCheckout (pessoa clicou no CTA final)
-    if (window.fbq) {
-      window.fbq('track', 'InitiateCheckout')
-    }
     
     // Identificar sessões de alta intenção
     if (window.clarity) {

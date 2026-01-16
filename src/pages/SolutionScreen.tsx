@@ -53,8 +53,6 @@ export function SolutionScreen() {
 
   useEffect(() => {
     analytics.trackPageView('solution')
-    // Facebook Pixel - ViewContent: pessoa chegou na página da solução e ENGATOU
-    analytics.trackViewContent('Planilha de Hipertrofia', 'solution')
   }, [])
 
   const profileType = getProfile(answers.trainingDays, answers.mainProblem)
