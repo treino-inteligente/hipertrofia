@@ -49,7 +49,7 @@ function getProfile(trainingDays?: string, mainProblem?: string): ProfileType {
 export function SolutionScreen() {
   const [, setLocation] = useLocation()
   const { answers } = useQuiz()
-  const [sheetImageSrc, setSheetImageSrc] = useState('/planilha.jpg')
+  const [sheetImageSrc, setSheetImageSrc] = useState(`${import.meta.env.BASE_URL}planilha.jpg`)
 
   useEffect(() => {
     analytics.trackPageView('solution')
@@ -155,7 +155,7 @@ export function SolutionScreen() {
                 alt="Print da planilha com progressão automática"
                 className="w-full h-auto block"
                 onError={() => {
-                  if (sheetImageSrc.endsWith('.jpg')) setSheetImageSrc('/planilha.jpg')
+                  if (sheetImageSrc.includes('.jpg')) setSheetImageSrc(`${import.meta.env.BASE_URL}planilha.jpg`)
                 }}
               />
             </div>
