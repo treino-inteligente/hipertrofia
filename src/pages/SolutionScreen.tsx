@@ -59,7 +59,7 @@ export function SolutionScreen() {
 
   const ctaLabel = useMemo(() => {
     if (profileType === 'SEM_DIRECAO') return 'Quero saber exatamente o que fazer'
-    return 'Quero destravar minha progressão'
+    return 'Quero saber exatamente o que fazer'
   }, [profileType])
 
   const handleCheckout = () => {
