@@ -47,7 +47,7 @@ function getProfile(trainingDays?: string, mainProblem?: string): ProfileType {
  */
 const PROFILE_CONTENT: Record<ProfileType, ProfileContent> = {
   TREINA_DEMAIS: {
-    title: 'PERFIL O TREINA MUITO"',
+    title: 'PERFIL O TREINA MUITO',
     subtitleBefore: 'Se você continuar treinando desse jeito, o mais provável é continuar estagnado — ', 
     subtitleHighlight: 'mesmo se se esforçar',
     description: 'A maioria das pessoas treina com disciplina, comparece na academia, se esforça... mas acaba exagerando no volume de treino.',
