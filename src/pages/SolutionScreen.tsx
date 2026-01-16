@@ -155,22 +155,9 @@ export function SolutionScreen() {
                 alt="Print da planilha com progressão automática"
                 className="w-full h-auto block"
                 onError={() => {
-                  if (sheetImageSrc.endsWith('.png')) setSheetImageSrc('/planilha-print.svg')
+                  if (sheetImageSrc.endsWith('.jpg')) setSheetImageSrc('/planilha.jpg')
                 }}
               />
-
-              {/* Círculo de destaque (ajuste a posição se trocar o print) */}
-              <div
-                aria-hidden="true"
-                className="absolute border-4 border-primary/80 rounded-full pointer-events-none"
-                style={{ width: 140, height: 90, right: 24, top: 24 }}
-              />
-              <div
-                aria-hidden="true"
-                className="absolute right-6 top-[120px] bg-primary text-white text-xs font-semibold px-2 py-1 rounded-md shadow"
-              >
-                progressão automática aqui
-              </div>
             </div>
           </div>
 
