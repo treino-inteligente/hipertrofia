@@ -10,7 +10,7 @@ import { useQuiz } from '@/hooks/useQuiz'
  * ⚠️ CONFIGURAÇÃO IMPORTANTE
  * Substitua pela URL real do seu checkout Kiwify
  */
-const CHECKOUT_URL = 'https://pay.kiwify.com.br/SEU_LINK_AQUI'
+const CHECKOUT_URL = 'https://pay.kiwify.com.br/fUcu9RX'
 
 /**
  * Tipos de perfil baseados nas respostas
@@ -49,7 +49,7 @@ function getProfile(trainingDays?: string, mainProblem?: string): ProfileType {
 export function SolutionScreen() {
   const [, setLocation] = useLocation()
   const { answers } = useQuiz()
-  const [sheetImageSrc, setSheetImageSrc] = useState('/planilha-print.png')
+  const [sheetImageSrc, setSheetImageSrc] = useState('/planilha.jpg')
 
   useEffect(() => {
     analytics.trackPageView('solution')
@@ -80,6 +80,9 @@ export function SolutionScreen() {
           {/* Badge discreto */}
           <div className="flex justify-center">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium border border-primary/20">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
               <span>Sistema pronto para hoje</span>
             </div>
           </div>
