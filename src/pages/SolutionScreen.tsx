@@ -2,7 +2,7 @@ import { useLocation } from 'wouter'
 import { ScreenContainer } from '@/components/ui/ScreenContainer'
 import { CTAButton } from '@/components/ui/CTAButton'
 import { analytics } from '@/lib/analytics'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CheckCircle2 } from 'lucide-react'
 import { useQuiz } from '@/hooks/useQuiz'
 
