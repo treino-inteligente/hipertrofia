@@ -67,6 +67,8 @@ export function SolutionScreen() {
 
   useEffect(() => {
     analytics.trackPageView('solution')
+    // Scroll para o topo ao entrar na página
+    window.scrollTo(0, 0)
   }, [])
 
   const profileType = getProfile(answers.trainingDays, answers.mainProblem)
