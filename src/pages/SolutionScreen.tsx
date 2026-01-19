@@ -39,17 +39,21 @@ function getProfile(trainingDays?: string, mainProblem?: string): ProfileType {
  */
 interface ProfileSolutionContent {
   targetAudience: string // Para quem é
+  profileName: string // Nome amigável do perfil
 }
 
 const PROFILE_SOLUTION: Record<ProfileType, ProfileSolutionContent> = {
   TREINA_DEMAIS: {
-    targetAudience: 'Esse plano é para quem se identificou com o perfil Treina Muito.'
+    targetAudience: 'Esse plano é para quem se identificou com o perfil Treina Muito.',
+    profileName: 'Treina Muito'
   },
   ESTAGNADO: {
-    targetAudience: 'Esse plano é para quem se identificou com o perfil Estagnado.'
+    targetAudience: 'Esse plano é para quem se identificou com o perfil Estagnado.',
+    profileName: 'Estagnado'
   },
   SEM_DIRECAO: {
-    targetAudience: 'Esse plano é para quem se identificou com o perfil Sem Direção.'
+    targetAudience: 'Esse plano é para quem se identificou com o perfil Sem Direção.',
+    profileName: 'Sem Direção'
   }
 }
 
@@ -131,7 +135,48 @@ export function SolutionScreen() {
             </div>
           </div>
 
-          {/* 3. Como usar */}
+          {/* 3. O que você vai perceber */}
+          <div className="space-y-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center">
+              O que você vai perceber usando o plano
+            </h2>
+            <div className="space-y-3 bg-background/80 backdrop-blur-sm rounded-lg p-4 md:p-5 border border-primary/10">
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-base md:text-lg text-foreground font-semibold">Na primeira semana:</p>
+                  <p className="text-base md:text-lg text-muted-foreground">você entende exatamente o que fazer em cada treino</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-base md:text-lg text-foreground font-semibold">Em 14 dias:</p>
+                  <p className="text-base md:text-lg text-muted-foreground">sente mais controle sobre alimentação e treino</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-base md:text-lg text-foreground font-semibold">Em 30 dias:</p>
+                  <p className="text-base md:text-lg text-muted-foreground">começa a ver mudanças reais no corpo e na consistência</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 3.5. Isso não é genérico */}
+          <div className="bg-gradient-to-br from-accent/10 to-accent/5 rounded-lg p-5 md:p-6 border-2 border-accent/20 space-y-2">
+            <h3 className="text-xl md:text-2xl font-bold text-foreground text-center">
+              Isso não é um PDF genérico
+            </h3>
+            <p className="text-base md:text-lg text-foreground/90 text-center leading-relaxed">
+              O plano foi criado para quem se identificou com o perfil <span className="font-bold text-primary">{profileContent.profileName}</span>,
+              com foco em simplicidade, execução e resultado real.
+            </p>
+          </div>
+
+          {/* 4. Como usar */}
           <div className="bg-background/80 backdrop-blur-sm rounded-lg p-4 md:p-5 border border-primary/10">
             <h3 className="text-lg md:text-xl font-bold text-foreground mb-3">
               Como usar:
@@ -141,7 +186,7 @@ export function SolutionScreen() {
             </p>
           </div>
 
-          {/* 4. Prova visual */}
+          {/* 5. Prova visual */}
           <div className="space-y-3">
             <p className="text-sm font-semibold text-center text-muted-foreground">
               Print da planilha:
@@ -158,14 +203,17 @@ export function SolutionScreen() {
             </div>
           </div>
 
-          {/* 5. Garantia */}
-          <div className="bg-background/80 backdrop-blur-sm rounded-lg p-4 md:p-5 border border-primary/10 text-center">
+          {/* 6. Garantia */}
+          <div className="bg-background/80 backdrop-blur-sm rounded-lg p-4 md:p-5 border border-primary/10 text-center space-y-2">
             <p className="text-base md:text-lg text-foreground font-semibold">
               7 dias de garantia incondicional
             </p>
+            <p className="text-sm md:text-base text-muted-foreground">
+              Se não fizer sentido pra você, é só pedir o reembolso.
+            </p>
           </div>
 
-          {/* 6. Preço */}
+          {/* 7. Preço */}
           <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg p-5 md:p-6 border-2 border-primary/20 text-center space-y-3">
             <p className="text-muted-foreground text-sm font-medium">
               Acesso completo por apenas
@@ -180,7 +228,44 @@ export function SolutionScreen() {
             </div>
           </div>
 
-          {/* 7. CTA final */}
+          {/* 7.5. Micro-FAQ */}
+          <div className="bg-background/80 backdrop-blur-sm rounded-lg p-4 md:p-5 border border-primary/10 space-y-4">
+            <div className="space-y-2">
+              <p className="text-base md:text-lg font-bold text-foreground flex items-start gap-2">
+                <span className="text-primary">❓</span>
+                <span>Isso serve pra iniciantes?</span>
+              </p>
+              <p className="text-sm md:text-base text-muted-foreground pl-7">
+                Sim, o plano é simples e guiado.
+              </p>
+            </div>
+            
+            <div className="h-px bg-primary/10" />
+            
+            <div className="space-y-2">
+              <p className="text-base md:text-lg font-bold text-foreground flex items-start gap-2">
+                <span className="text-primary">❓</span>
+                <span>Preciso seguir dieta rígida?</span>
+              </p>
+              <p className="text-sm md:text-base text-muted-foreground pl-7">
+                Não. A ideia é adaptação, não radicalismo.
+              </p>
+            </div>
+            
+            <div className="h-px bg-primary/10" />
+            
+            <div className="space-y-2">
+              <p className="text-base md:text-lg font-bold text-foreground flex items-start gap-2">
+                <span className="text-primary">❓</span>
+                <span>Como recebo o acesso?</span>
+              </p>
+              <p className="text-sm md:text-base text-muted-foreground pl-7">
+                Acesso imediato após o pagamento.
+              </p>
+            </div>
+          </div>
+
+          {/* 8. CTA final */}
           <div className="space-y-3">
             <CTAButton 
               size="lg"
