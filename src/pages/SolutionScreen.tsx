@@ -145,21 +145,21 @@ export function SolutionScreen() {
                 <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-base md:text-lg text-foreground font-semibold">Na primeira semana:</p>
-                  <p className="text-base md:text-lg text-muted-foreground">você entende exatamente o que fazer em cada treino</p>
+                  <p className="text-base md:text-lg text-muted-foreground">Você entende exatamente o que fazer em cada treino</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-base md:text-lg text-foreground font-semibold">Em 14 dias:</p>
-                  <p className="text-base md:text-lg text-muted-foreground">sente mais controle sobre alimentação e treino</p>
+                  <p className="text-base md:text-lg text-muted-foreground">Sente mais controle sobre alimentação e treino</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-base md:text-lg text-foreground font-semibold">Em 30 dias:</p>
-                  <p className="text-base md:text-lg text-muted-foreground">começa a ver mudanças reais no corpo e na consistência</p>
+                  <p className="text-base md:text-lg text-muted-foreground">Começa a ver mudanças reais no corpo e na consistência</p>
                 </div>
               </div>
             </div>
